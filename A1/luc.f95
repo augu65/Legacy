@@ -1,6 +1,6 @@
 program luc
 
-implicit integer (a-z)
+implicit integer :: (a-z)
 data handle/0/
 dimension k(0:7,0:15),m(0:7,0:7,0:1)
 dimension key(0:127), message(0:127)
@@ -46,7 +46,7 @@ end
 
 
 subroutine lucifer(d,k,m)
-implicit integer(a-z)
+implicit integer :: (a-z)
 dimension m(0:7,0:7,0:1),k(0:7,0:15),o(0:7)
 
 dimension sw(0:7,0:7),pr(0:7),tr(0:7),c(0:1)
@@ -116,7 +116,7 @@ return
 end
 
 subroutine expand(a,b,l)
-implicit integer (a-z)
+implicit integer ::  (a-z)
 dimension a(0:*),b(0:*)
 do 100 i=0,l-1,1
 v=b(i)
@@ -129,7 +129,7 @@ return
 end
 
 subroutine compress(a,b,l)
-implicit integer (a-z)
+implicit integer ::  (a-z)
 dimension a(0:*),b(0:*)
 do 100 i=0,l-1,1
 v=0
