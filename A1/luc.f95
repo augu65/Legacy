@@ -69,48 +69,48 @@ h1=1
 kc=0
 if (d .eq. 1) kc=8
 
-do 100 ii=1,16,1
+do ii=1,16,1
 
-if (d.eq.1) kc=mod(kc+1,16)
-ks=kc
+    if (d.eq.1) kc=mod(kc+1,16)
+    ks=kc
 
-do 200 jj=0,7,1
-l=0
-h=0
+    do jj=0,7,1
+    l=0
+    h=0
 
-do 400 kk=0,3,1
-l=l*2+m(7-kk,jj,h1)
-400   continue
-do 410 kk=4,7,1
-h=h*2+m(7-kk,jj,h1)
-410   continue
+        do kk=0,3,1
+            l=l*2+m(7-kk,jj,h1)
+        end do
+        do kk=4,7,1
+        h=h*2+m(7-kk,jj,h1)
+        end do
 
-v=(s0(l)+16*s1(h))*(1-k(jj,ks))+(s0(h)+16*s1(l))*k(jj,ks)
+        v=(s0(l)+16*s1(h))*(1-k(jj,ks))+(s0(h)+16*s1(l))*k(jj,ks)
 
-do 500 kk=0,7,1
-tr(kk)=mod(v,2)
-v=v/2
-500   continue
+        do kk=0,7,1
+            tr(kk)=mod(v,2)
+            v=v/2
+        end do
 
-do 300 kk=0,7,1
-m(kk,mod(o(kk)+jj,8),h0)=mod(k(pr(kk),kc)+tr(pr(kk))&
-+ m(kk,mod(o(kk)+jj,8),h0),2)
-300   continue
-if (jj .lt. 7 .or. d .eq. 1) kc=mod(kc+1,16)
-200   continue
+        do kk=0,7,1
+            m(kk,mod(o(kk)+jj,8),h0)=mod(k(pr(kk),kc)+tr(pr(kk))&
+            + m(kk,mod(o(kk)+jj,8),h0),2)
+        end do
+        if (jj .lt. 7 .or. d .eq. 1) kc=mod(kc+1,16)
+    end do
 
-jjj=h0
-h0=h1
-h1=jjj
-100   continue
+    jjj=h0
+    h0=h1
+    h1=jjj
+end do
 
-do 700 jj=0,7,1
-do 800 kk=0,7,1
-sw(kk,jj)=m(kk,jj,0)
-m(kk,jj,0)=m(kk,jj,1)
-m(kk,jj,1)=sw(kk,jj)
-800   continue
-700   continue
+do jj=0,7,1
+    do kk=0,7,1
+        sw(kk,jj)=m(kk,jj,0)
+        m(kk,jj,0)=m(kk,jj,1)
+        m(kk,jj,1)=sw(kk,jj)
+    end do
+end do
 
 return
 end
@@ -118,25 +118,25 @@ end
 subroutine expand(a,b,l)
 implicit integer (a-z)
 dimension a(0:*),b(0:*)
-do 100 i=0,l-1,1
-v=b(i)
-do 200 j=0,3,1
-a((3-j)+i*4)=mod(v,2)
-v=v/2
-200   continue
-100   continue
+do i=0,l-1,1
+    v=b(i)
+    do j=0,3,1
+        a((3-j)+i*4)=mod(v,2)
+        v=v/2
+    end do
+end do
 return
 end
 
 subroutine compress(a,b,l)
 implicit integer  (a-z)
 dimension a(0:*),b(0:*)
-do 100 i=0,l-1,1
-v=0
-do 200 j=0,3,1
-v=v*2+mod(a(j+i*4),2)
-200   continue
-b(i)=v
-100   continue
+do i=0,l-1,1
+    v=0
+    do j=0,3,1
+        v=v*2+mod(a(j+i*4),2)
+    end do
+    b(i)=v
+end do
 return
 end
