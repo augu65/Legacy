@@ -1,12 +1,18 @@
 program luc
 
-implicit integer (a-z)
+implicit none
+integer, dimension(0:7,0:15) :: k
+integer, dimension(0:7,0:7,0:1) :: m
+integer, dimension(0:127) :: key, message
+integer, dimension(0:31) :: kb, mb
+integer :: i
+real handle, d
+
 data handle/0/
-dimension k(0:7,0:15),m(0:7,0:7,0:1)
-dimension key(0:127), message(0:127)
+
 equivalence (k(0,0),key(1)),(m(0,0,0),message(1))
 
-dimension kb(0:31),mb(0:31)
+
 write(*,1003)
 read(*,1004) (kb(i),i=0,31)
 
@@ -46,11 +52,13 @@ end
 
 
 subroutine lucifer(d,k,m)
-implicit integer  (a-z)
-dimension m(0:7,0:7,0:1),k(0:7,0:15),o(0:7)
-
-dimension sw(0:7,0:7),pr(0:7),tr(0:7),c(0:1)
-dimension s0(0:15),s1(0:15)
+integer, dimension(0:7,0:7,0:1) :: m
+integer, dimension(0:7,0:15) :: k
+integer, dimension(0:1) :: c
+integer, dimension (0:7,0:7) :: sw
+integer, dimension(0:7) :: pr, tr, o
+integer, dimension(0:15) :: s0, s1
+integer :: h0, kc, ii, h1, ks, jj, jjj, l, h, v, kk
 equivalence (c(0),h),(c(1),l)
 
 !     diffusion pattern
@@ -116,8 +124,8 @@ return
 end
 
 subroutine expand(a,b,l)
-implicit integer (a-z)
-dimension a(0:*),b(0:*)
+integer, dimension(0:*) :: a, b
+integer :: i, j, v
 do i=0,l-1,1
     v=b(i)
     do j=0,3,1
@@ -129,8 +137,9 @@ return
 end
 
 subroutine compress(a,b,l)
-implicit integer  (a-z)
-dimension a(0:*),b(0:*)
+integer, dimension(0:*) :: a, b
+integer :: i, j, v
+
 do i=0,l-1,1
     v=0
     do j=0,3,1
