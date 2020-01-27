@@ -1,3 +1,5 @@
+! This program takes a message and key and encrypts it
+! using the lucifer encryption algorithm
 program luc
 
 implicit none
@@ -9,6 +11,7 @@ integer :: i
 real ::  d=0
 equivalence (k(0,0),key(1)),(m(0,0,0),message(1))
 
+!get input
 write(*,*) 'Please enter the key for Lucifer:'
 read(*,"(32z1.1)") (kb(i),i=0,31)
 
@@ -19,13 +22,15 @@ call expand(message,mb,32)
 call expand(key,kb,32)
 
 call lucifer(d,k,m)
+!get ciphertext and print it
 call compress(message,mb,32)
 write(*,*)'String as cipher text'
 write(*,"(1x,32z1.1)") (mb(i),i=0,31)
+!sets lucifer to decrypt mode
 d=1
 call lucifer(d,k,m)
 
-
+!gets decrypted key and message and prints it
 call compress(message,mb,32)
 call compress(key,kb,32)
 write(*,*) 'Lucifer key'
@@ -33,10 +38,11 @@ write(*,"(1x,32z1.1)") (kb(i),i=0,31)
 write(*,*) 'Decoded string'
 write(*,"(1x,32z1.1)") (mb(i),i=0,31)
 
-!(' cipher '/16(1x,i1))
 end program luc
 
-
+!This function encrypt or decrypts a message
+!This is based on the value of d with k being
+!the key and m being the message 
 subroutine lucifer(d,k,m)
 integer, dimension(0:7,0:7,0:1) :: m
 integer, dimension(0:7,0:15) :: k
@@ -102,6 +108,8 @@ end do
 return
 end
 
+!this function expands a byte b into an array
+!l is the length of the array
 subroutine expand(a,b,l)
 integer, dimension(0:*) :: a, b
 integer :: i, j, v
@@ -116,6 +124,8 @@ end do
 return
 end
 
+!this function compresses an array a back to byte for in b
+! l is the lenght of the array
 subroutine compress(a,b,l)
 integer, dimension(0:*) :: a, b
 integer :: i, j, v
