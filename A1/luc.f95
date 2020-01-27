@@ -6,41 +6,35 @@ integer, dimension(0:7,0:7,0:1) :: m
 integer, dimension(0:127) :: key, message
 integer, dimension(0:31) :: kb, mb
 integer :: i
-real ::  d, handle = 0
-
-
+real ::  d=0, handle = 0
 equivalence (k(0,0),key(1)),(m(0,0,0),message(1))
 
-
-write(*,*) ' key '
+write(*,*) 'Please enter the key for Lucifer:'
 read(*,"(32z1.1)") (kb(i),i=0,31)
 
-write(*,*) ' plain '
+write(*,*) 'Please enter the string to be encoded:'
 read(*,"(32z1.1)") (mb(i),i=0,31)
 
 call expand(message,mb,32)
 call expand(key,kb,32)
 
-write(*,"(' key '/16(1x,i1))") (key(i), i=0,127)
-write(*,"(' plain '/16(1x,i1))") (message(i), i=0,127)
-
-d=0
 call lucifer(d,k,m)
-
+call compress(message,mb,32)
+write(*,*)'String as cipher text'
+write(*,"(1x,32z1.1)") (mb(i),i=0,31)
 d=1
 call lucifer(d,k,m)
 
-write(*,"(' plain '/16(1x,i1))") (message(i),i=0,127)
 
 call compress(message,mb,32)
 call compress(key,kb,32)
-write(*,*) ' key '
+write(*,*) 'Lucifer key'
 write(*,"(1x,32z1.1)") (kb(i),i=0,31)
-write(*,*) ' plain '
+write(*,*) 'Decoded string'
 write(*,"(1x,32z1.1)") (mb(i),i=0,31)
 
 !(' cipher '/16(1x,i1))
-end
+end program luc
 
 
 subroutine lucifer(d,k,m)
@@ -49,22 +43,17 @@ integer, dimension(0:7,0:15) :: k
 integer, dimension(0:1) :: c
 integer, dimension (0:7,0:7) :: sw
 !     inverse of fixed permutation
-integer, dimension(0:7) :: pr=[2,5,4,0,3,1,7,6], tr 
+integer, dimension(0:7) :: pr=[2,5,4,0,3,1,7,6]
+integer, dimension(0:7) :: tr 
 !     diffusion pattern
 integer, dimension(0:7) :: o=[7,6,2,1,5,0,3,4]
-!     S-box permutation
+!     S-box permutations
 integer, dimension(0:15) :: s0=[12,15,7,10,14,13,11,0,2,6,3,1,9,4,5,8]
-!     S-box permutation
 integer, dimension(0:15) :: s1=[7,2,14,9,3,11,0,4,12,13,1,10,6,15,8,5]
-integer :: h0, kc, ii, h1, ks, jj, jjj, l, h, v, kk
+integer :: h0=0, kc=0, ii, h1=1, ks, jj, jjj, l, h, v, kk
 
 equivalence (c(0),h),(c(1),l)
 
-
-h0=0
-h1=1
-
-kc=0
 if (d .eq. 1) kc=8
 
 do ii=1,16,1
