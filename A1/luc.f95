@@ -6,7 +6,7 @@ integer, dimension(0:7,0:7,0:1) :: m
 integer, dimension(0:127) :: key, message
 integer, dimension(0:31) :: kb, mb
 integer :: i
-real ::  d=0, handle = 0
+real ::  d=0
 equivalence (k(0,0),key(1)),(m(0,0,0),message(1))
 
 write(*,*) 'Please enter the key for Lucifer:'
