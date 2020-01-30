@@ -11,6 +11,8 @@ integer :: i
 real ::  d=0
 equivalence (k(0,0),key(1)),(m(0,0,0),message(1))
 
+write(*,*) 'Welcome to Lucifer!'
+write(*,*) 'This program encrypts a message using the lucifer algorthm which is a precurser to DES.'
 !get input
 write(*,*) 'Please enter the key for Lucifer:'
 read(*,"(32z1.1)") (kb(i),i=0,31)
