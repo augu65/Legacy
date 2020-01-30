@@ -46,6 +46,7 @@ end program luc
 !This is based on the value of d with k being
 !the key and m being the message 
 subroutine lucifer(d,k,m)
+implicit none
 integer, dimension(0:7,0:7,0:1) :: m
 integer, dimension(0:7,0:15) :: k
 integer, dimension(0:1) :: c
@@ -59,7 +60,7 @@ integer, dimension(0:7) :: o=[7,6,2,1,5,0,3,4]
 integer, dimension(0:15) :: s0=[12,15,7,10,14,13,11,0,2,6,3,1,9,4,5,8]
 integer, dimension(0:15) :: s1=[7,2,14,9,3,11,0,4,12,13,1,10,6,15,8,5]
 integer :: h0=0, kc=0, ii, h1=1, ks, jj, jjj, l, h, v, kk
-
+real :: d
 equivalence (c(0),h),(c(1),l)
 
 if (d .eq. 1) kc=8
@@ -113,8 +114,9 @@ end
 !this function expands a byte b into an array
 !l is the length of the array
 subroutine expand(a,b,l)
+implicit none
 integer, dimension(0:*) :: a, b
-integer :: i, j, v
+integer :: i, j, v, l
 
 do i=0,l-1,1
     v=b(i)
@@ -129,8 +131,9 @@ end
 !this function compresses an array a back to byte for in b
 ! l is the lenght of the array
 subroutine compress(a,b,l)
+implicit none
 integer, dimension(0:*) :: a, b
-integer :: i, j, v
+integer :: i, j, v, l
 
 do i=0,l-1,1
     v=0
