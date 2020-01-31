@@ -1,44 +1,49 @@
 ! This program takes a message and key and encrypts it
 ! using the lucifer encryption algorithm
-program luc
-
+program luchex
 implicit none
 integer, dimension(0:7,0:15) :: k
 integer, dimension(0:7,0:7,0:1) :: m
-integer, dimension(0:127) :: key, message
-integer, dimension(0:31) :: kb, mb
-integer :: i
+integer, dimension(0:127) :: key,message
+integer, dimension(0:31) :: kb
+integer, dimension(0:31) :: hex
+integer :: i,l
 real ::  d=0
+character (len=12) :: w
 equivalence (k(0,0),key(1)),(m(0,0,0),message(1))
-
+write(*,*) 'Welcome to Lucifer!'
+write(*,*) 'Encrypt a message using the lucifer algorthm.'
 !get input
 write(*,*) 'Please enter the key for Lucifer:'
 read(*,"(32z1.1)") (kb(i),i=0,31)
 
-write(*,*) 'Please enter the string to be encoded:'
-read(*,"(32z1.1)") (mb(i),i=0,31)
+!run functions from hex.f95
+call readWord(w)
+l = len(trim(w))
+call word2hex(w,hex,l)
+write(*,*) 'inputed word as hex:'
+call printhex(hex,l)
 
-call expand(message,mb,32)
+call expand(message,hex,32)
 call expand(key,kb,32)
 
 call lucifer(d,k,m)
 !get ciphertext and print it
-call compress(message,mb,32)
+call compress(message,hex,32)
 write(*,*)'String as cipher text'
-write(*,"(1x,32z1.1)") (mb(i),i=0,31)
+write(*,"(1x,32z1.1)") (hex(i),i=0,31)
 !sets lucifer to decrypt mode
 d=1
 call lucifer(d,k,m)
-
 !gets decrypted key and message and prints it
-call compress(message,mb,32)
+call compress(message,hex,32)
 call compress(key,kb,32)
 write(*,*) 'Lucifer key'
 write(*,"(1x,32z1.1)") (kb(i),i=0,31)
 write(*,*) 'Decoded string'
-write(*,"(1x,32z1.1)") (mb(i),i=0,31)
+call printhex(hex,l)
 
-end program luc
+end program luchex
 
 !This function encrypt or decrypts a message
 !This is based on the value of d with k being
