@@ -5,8 +5,7 @@ implicit none
 integer, dimension(0:7,0:15) :: k
 integer, dimension(0:7,0:7,0:1) :: m
 integer, dimension(0:127) :: key,message
-integer, dimension(0:31) :: kb
-integer, dimension(0:31) :: hex
+integer, dimension(0:31) :: kb,hex
 integer :: i,l
 real ::  d=0
 character (len=12) :: w

@@ -5,16 +5,16 @@ implicit none
 character (len=12) :: w
 write(*,*) 'Please enter the word for Lucifer to encrypt:'
 read(*,*) w
+return
 end
 !converts the ASCII word to hexadecimal
 !w = word, h = word in hex, l = length
 subroutine word2hex(w,h,l)
 implicit none
-integer :: l
+integer :: i, j=1,l
 character (len=l) :: w
-integer, dimension(1:127) :: h
+integer, dimension(1:31) :: h
 character (len=2) :: hexTemp
-integer :: i, j=1
 do i=1,l
     write(hexTemp,'(Z2)') w(i:i)
     read(hexTemp(1:1),'(Z1)') h(j)
@@ -24,6 +24,7 @@ do i=1,l
 end do
 j=j-1
 l=j
+return
 end
 !prints out the word in hex
 !h = the word in hex, l = length
@@ -42,4 +43,5 @@ do i=1, l
     if (h(i) < 10) write(*,"(32z1.1)", Advance = 'No') char(h(i))
 end do
 write(*,*)
+return
 end
