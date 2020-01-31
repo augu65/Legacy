@@ -5,7 +5,8 @@ implicit none
 integer, dimension(0:7,0:15) :: k
 integer, dimension(0:7,0:7,0:1) :: m
 integer, dimension(0:127) :: key,message
-integer, dimension(0:31) :: kb,hex
+integer, dimension(0:31) :: kb
+integer, dimension(1:31) :: hex
 integer :: i,l
 real ::  d=0
 character (len=12) :: w
@@ -22,7 +23,6 @@ l = len(trim(w))
 call word2hex(w,hex,l)
 write(*,*) 'inputed word as hex:'
 call printhex(hex,l)
-
 call expand(message,hex,32)
 call expand(key,kb,32)
 
@@ -30,7 +30,7 @@ call lucifer(d,k,m)
 !get ciphertext and print it
 call compress(message,hex,32)
 write(*,*)'String as cipher text'
-write(*,"(1x,32z1.1)") (hex(i),i=0,31)
+write(*,"(1x,32z1.1)") (hex(i),i=1,31)
 !sets lucifer to decrypt mode
 d=1
 call lucifer(d,k,m)

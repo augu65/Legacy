@@ -22,6 +22,11 @@ do i=1,l
     read(hexTemp(2:2),'(Z1)') h(j)
     j=j+1
 end do
+!writes the rest of the array to 0
+do i=j,31
+    h(i) = 0
+end do
+!decremetns j so it represents the length in h
 j=j-1
 l=j
 return
@@ -32,6 +37,7 @@ subroutine printhex(h,l)
 implicit none
 integer :: l,i=1
 integer, dimension(1:127) :: h
+!formatting line indent
 write(*,"(1x)", Advance = 'No')
 do i=1, l
     if (h(i) == 10) write(*,"(A)", Advance = 'No' ) 'A'
@@ -42,6 +48,7 @@ do i=1, l
     if (h(i) == 15) write(*,"(A)", Advance = 'No' ) 'F'
     if (h(i) < 10) write(*,"(32z1.1)", Advance = 'No') char(h(i))
 end do
+!formatting line \n
 write(*,*)
 return
 end
