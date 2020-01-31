@@ -1,5 +1,6 @@
 !By: Jonah Stegman
 ! This program takes a message and key and encrypts it
+! It also prints out the inputted message as hex
 ! using the lucifer encryption algorithm
 program luchex
 implicit none

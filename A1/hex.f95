@@ -1,4 +1,7 @@
+
 !By: Jonah Stegman
+! Helper functions for luchex.f95
+
 !gets a word from the user to encrypt
 ! w = word entered by the user
 subroutine readWord(w)
