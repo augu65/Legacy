@@ -110,7 +110,7 @@ do jj=0,7,1
 end do
 
 return
-end
+end subroutine lucifer
 
 !this function expands a byte b into an array
 !l is the length of the array
@@ -127,7 +127,7 @@ do i=0,l-1,1
     end do
 end do
 return
-end
+end subroutine expand
 
 !this function compresses an array a back to byte for in b
 ! l is the lenght of the array
@@ -144,4 +144,4 @@ do i=0,l-1,1
     b(i)=v
 end do
 return
-end
+end subroutine compress

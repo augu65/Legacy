@@ -7,7 +7,7 @@ character (len=12) :: w
 write(*,*) 'Please enter the word for Lucifer to encrypt:'
 read(*,*) w
 return
-end
+end subroutine readWord
 !converts the ASCII word to hexadecimal
 !w = word, h = word in hex, l = length
 subroutine word2hex(w,h,l)
@@ -31,7 +31,7 @@ end do
 j=j-1
 l=j
 return
-end
+end subroutine word2hex
 !prints out the word in hex
 !h = the word in hex, l = length
 subroutine printhex(h,l)
@@ -52,4 +52,4 @@ end do
 !formatting line \n
 write(*,*)
 return
-end
+end subroutine printhex
