@@ -22,7 +22,7 @@ read(*,"(32z1.1)") (kb(i),i=0,31)
 call readWord(w)
 l = len(trim(w))
 call word2hex(w,hex,l)
-write(*,*) 'inputed word as hex:'
+write(*,*) 'inputted word as hex:'
 call printhex(hex,l)
 call expand(message,hex,32)
 call expand(key,kb,32)
