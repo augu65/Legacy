@@ -1,3 +1,4 @@
+!By: Jonah Stegman
 ! This program takes a message and key and encrypts it
 ! using the lucifer encryption algorithm
 program luc

@@ -1,3 +1,4 @@
+!By: Jonah Stegman
 ! This program takes a message and key and encrypts it
 ! using the lucifer encryption algorithm
 program luchex
@@ -6,7 +7,7 @@ integer, dimension(0:7,0:15) :: k
 integer, dimension(0:7,0:7,0:1) :: m
 integer, dimension(0:127) :: key,message
 integer, dimension(0:31) :: kb
-integer, dimension(1:31) :: hex
+integer, dimension(0:31) :: hex
 integer :: i,l
 real ::  d=0
 character (len=12) :: w
@@ -30,7 +31,7 @@ call lucifer(d,k,m)
 !get ciphertext and print it
 call compress(message,hex,32)
 write(*,*)'String as cipher text'
-write(*,"(1x,32z1.1)") (hex(i),i=1,31)
+write(*,"(1x,32z1.1)") (hex(i),i=0,31)
 !sets lucifer to decrypt mode
 d=1
 call lucifer(d,k,m)

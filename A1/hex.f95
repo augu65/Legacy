@@ -1,3 +1,4 @@
+!By: Jonah Stegman
 !gets a word from the user to encrypt
 ! w = word entered by the user
 subroutine readWord(w)
@@ -36,7 +37,7 @@ end
 subroutine printhex(h,l)
 implicit none
 integer :: l,i=1
-integer, dimension(1:127) :: h
+integer, dimension(1:31) :: h
 !formatting line indent
 write(*,"(1x)", Advance = 'No')
 do i=1, l
