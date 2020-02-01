@@ -19,7 +19,7 @@ subroutine word2hex(w,h,l)
     integer :: i, j=1
     integer, intent(inout) :: l
     character (len=l), intent(in) :: w
-    integer,intent(out), dimension(1:31) :: h 
+    integer,intent(out), dimension(1:32) :: h
     character (len=2) :: hexTemp
     do i=1,l
         write(hexTemp,'(Z2)') w(i:i)
@@ -29,7 +29,7 @@ subroutine word2hex(w,h,l)
         j=j+1
     end do
 !   writes the rest of the array to 0
-    do i=j,31
+    do i=j,32
         h(i) = 0
     end do
 !   decremetns j so it represents the length in h
@@ -37,7 +37,7 @@ subroutine word2hex(w,h,l)
     l=j
     return
 end subroutine word2hex
- 
+
 !prints out the word in hex
 !h = the word in hex, l = length
 subroutine printhex(h,l)
