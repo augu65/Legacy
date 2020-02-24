@@ -107,6 +107,7 @@ procedure wordscram is
     -- returns an integer with 1 = failure and 0 = success
     function processText(filename: string) return integer is
         input : file_type;
+        numWordProcess : integer :=0;
         begin
             open (file => input,
                 mode => in_file,
@@ -129,6 +130,7 @@ procedure wordscram is
                         else
                             if isWord(word(1..n)) and n > 3 then
                                 put(scrambleWord(word(1..n),n-1));
+                                numWordProcess := numWordProcess + 1;
                             else
                                 put(word(1..n));
                             end if;
@@ -140,6 +142,7 @@ procedure wordscram is
                         if line'last < j then
                             if isWord(word(1..n)) and n > 3 then
                                 put(scrambleWord(word(1..n),n-1));
+                                numWordProcess := numWordProcess + 1;
                             else
                                 put(word(1..n));
                             end if;
@@ -154,15 +157,13 @@ procedure wordscram is
                 if is_open(input) then 
                     close(input);
                 end if;
-            return 0;
+            return numWordProcess;
         end processText;
 
     -- Variables for the main
-    flag: integer:=1;
+    numWords : integer := 0;
     userfile: constant string := getFilename;
 begin
-    flag:=processText(userfile);
-    if flag = 1 then
-        put_line("Error");
-    end if;
+    numWords:=processText(userfile);
+    put_line("The number of words processed is" & integer'image(numWords));
 end wordscram;
