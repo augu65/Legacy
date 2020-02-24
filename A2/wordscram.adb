@@ -4,7 +4,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with ada.numerics.discrete_random;
 procedure wordscram is 
-     type int_arr is array (1..100) of integer;
+     type int_arr is array (1..30) of integer;
         -- checks if input is a word
     function isWord(word: string) return boolean is
     begin
@@ -50,6 +50,7 @@ procedure wordscram is
             number : integer;
     begin
         loop
+            i := 1;
             check := true;
             Rand_Int.Reset(seed);
             num := Rand_Int.Random(seed);
@@ -74,13 +75,10 @@ procedure wordscram is
         j : integer := 2;
         k : integer := 1;
         word : string := original;
-        arr : int_arr := (1..100 => 0);
+        arr : int_arr := (1..30 => 0);
     begin
         loop
             num := randomInt(max,arr);
-            if num = 0 then
-                exit;
-            end if;
             arr(k) := num;
             word(num) := original(j);
             j := j + 1;
@@ -146,7 +144,7 @@ procedure wordscram is
     userfile: constant string := getFilename;
 begin
     flag:=processText(userfile);
-    if flag = 0 then
-        put_line("success");
+    if flag = 1 then
+        put_line("Error");
     end if;
 end wordscram;
