@@ -1,11 +1,16 @@
 -- By: Jonah Stegman
 -- Course: CIS*3190
+-- A2
 -- scrammble words using ada
 with Ada.Text_IO; use Ada.Text_IO;
 with ada.numerics.discrete_random;
 procedure wordscram is 
+    -- global types
      type int_arr is array (1..30) of integer;
-        -- checks if input is a word
+    
+    -- checks if input is a word
+    -- Param word is a string to be checked
+    -- Return values is false if it doesn't contain only letters else true
     function isWord(word: string) return boolean is
     begin
         for j in word'range loop
@@ -18,6 +23,7 @@ procedure wordscram is
 
 
     -- gets the filename from the user
+    -- returns a string containing the user entered filename
     function getFilename return string is
         filename : string (1..100);
         size : natural;
@@ -29,6 +35,7 @@ procedure wordscram is
             put_line("Enter the file name: "); 
             get_line(filename,size);
             begin
+                -- checks if file exists
                 open(file,in_file,filename(1..size));
                 close(file);
             exception
@@ -40,14 +47,17 @@ procedure wordscram is
     end getFilename;
 
     --generates a random number
-    function randomInt(max:integer; arr: int_arr) return integer  is
-            type Rand_Range is new integer range 2..max;
-            package Rand_Int is new Ada.Numerics.Discrete_Random(Rand_Range);
-            seed : Rand_Int.Generator;
-            num : Rand_Range;
-            check : boolean := false;
-            i : integer := 1;
-            number : integer;
+    -- param max whihc is the maximum range number
+    -- arr is an integer array which holds already selected numbers
+    -- return is a random number between 2 and the max that doesnt appear in arr
+    function randomInt(max:integer; arr: int_arr) return integer is
+        type Rand_Range is new integer range 2..max;
+        package Rand_Int is new Ada.Numerics.Discrete_Random(Rand_Range);
+        seed : Rand_Int.Generator;
+        num : Rand_Range;
+        check : boolean := false;
+        i : integer := 1;
+        number : integer;
     begin
         loop
             i := 1;
@@ -70,6 +80,9 @@ procedure wordscram is
 
 
     -- scrambles the word
+    -- param original is the string to be scrambled
+    -- param max is the size of the string
+    -- returns the scrambled version of original
     function scrambleWord(original:string; max:integer) return string is
         num : integer :=1;
         j : integer := 2;
@@ -90,6 +103,8 @@ procedure wordscram is
 
 
     -- Reads in file
+    -- param filename is the name of the file the user entered
+    -- returns an integer with 1 = failure and 0 = success
     function processText(filename: string) return integer is
         input : file_type;
         begin
@@ -106,6 +121,7 @@ procedure wordscram is
                     subtype upper is character range 'A'..'Z';
                     subtype number is character range '0'..'9';
                 begin
+                    --breaks line up into words and numbers
                     while  line'last >= j loop
                         if line(j) in upper or line(j) in lower or line(j) in number then 
                             n := n + 1;
@@ -120,6 +136,7 @@ procedure wordscram is
                             put(line(j));
                         end if;
                         j := j + 1;
+                        -- gets last word or number if line ends without punction or a space
                         if line'last < j then
                             if isWord(word(1..n)) and n > 3 then
                                 put(scrambleWord(word(1..n),n-1));
@@ -129,6 +146,7 @@ procedure wordscram is
                         end if;
                     end loop;
                 end;
+                -- prints a newline
                 put_line("");
             end loop;
         exception
