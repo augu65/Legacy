@@ -66,6 +66,7 @@ procedure wordscram is
             num := Rand_Int.Random(seed);
             number := Integer'Value(Rand_range'Image(num));
             loop
+                --checks if number has already been chosen for word.
                 if number = arr(i) then
                     check := false;
                     exit;
@@ -104,7 +105,7 @@ procedure wordscram is
 
     -- Reads in file
     -- param filename is the name of the file the user entered
-    -- returns an integer with 1 = failure and 0 = success
+    -- returns an integer  which is the number of words processed.
     function processText(filename: string) return integer is
         input : file_type;
         numWordProcess : integer :=0;
