@@ -80,7 +80,7 @@ procedure wordscram is
     end randomInt;
 
 
-    -- scrambles the word
+    -- scrambles the word passed to it.
     -- param original is the string to be scrambled
     -- param max is the size of the string
     -- returns the scrambled version of original
