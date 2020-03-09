@@ -27,7 +27,7 @@
            02 FILLER PICTURE X(9) VALUE SPACE.
            02 FILLER PICTURE X(26) VALUE 'SQUARE ROOT APPROXIMATIONS'.
         01 UNDER-LINE.
-           02 FILLER PICTURE X(44) VALUE SPACE.
+           02 FILLER PICTURE X(44) VALUE
               '--------------------------------------------'.
         01 COL-HEADS.
            02 FILLER PICTURE X(8) VALUE SPACES.
