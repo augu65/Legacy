@@ -52,33 +52,35 @@
           02 OUTP-Z PICTURE Z(11)9.9(6).
           02 FILLER PICTURE X(37) VALUE
              '  ATTEMPT ABORTED,TOO MANY ITERATIONS'.
-       
+       77 DONE pic 9.
        PROCEDURE DIVISION.
            OPEN INPUT INPUT-FILE, OUTPUT STANDARD-OUTPUT.
            WRITE OUT-LINE FROM TITLE-LINE AFTER ADVANCING 0 LINES.
            WRITE OUT-LINE FROM UNDER-LINE AFTER ADVANCING 1 LINE.
            WRITE OUT-LINE FROM COL-HEADS AFTER ADVANCING 1 LINE.
            WRITE OUT-LINE FROM UNDERLINE-2 AFTER ADVANCING 1 LINE.
-       S1.  
+       S1. 
+           MOVE 0 to DONE.
            READ INPUT-FILE INTO IN-CARD AT END PERFORM FINISH.
-           IF IN-Z > ZERO 
-               MOVE IN-DIFF TO DIFF
-               MOVE IN-Z TO Z
-               DIVIDE 2 INTO Z GIVING X ROUNDED
-               PERFORM S2 VARYING K FROM 1 BY 1
-                   UNTIL K IS GREATER THAN 1000
-               MOVE IN-Z TO OUTP-Z
-               WRITE OUT-LINE FROM ABORT-MESS AFTER ADVANCING 1 LINE
-               PERFORM S1
-           ELSE
-               MOVE IN-Z TO OT-Z
-               WRITE OUT-LINE FROM ERROR-MESS AFTER ADVANCING 1 LINE
-               PERFORM S1
-           END-IF. 
+               IF IN-Z > ZERO 
+                   MOVE IN-DIFF TO DIFF
+                   MOVE IN-Z TO Z
+                   DIVIDE 2 INTO Z GIVING X ROUNDED
+                   PERFORM S2 VARYING K FROM 1 BY 1
+                       UNTIL K IS GREATER THAN 1000
+                   MOVE IN-Z TO OUTP-Z
+                   WRITE OUT-LINE FROM ABORT-MESS AFTER ADVANCING 1 LINE
+                   PERFORM S1
+               ELSE
+                   MOVE IN-Z TO OT-Z
+                   WRITE OUT-LINE FROM ERROR-MESS AFTER ADVANCING 1 LINE
+                   PERFORM S1
+               END-IF.
+
        S2. 
            COMPUTE Y ROUNDED = 0.5 * (X + Z / X).
            SUBTRACT X FROM Y GIVING TEMP.
-           IF TEMP < ZERO 
+           IF NOT TEMP > ZERO 
                COMPUTE TEMP = - TEMP
            END-IF.
            IF TEMP / (Y + X) > DIFF
