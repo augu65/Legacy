@@ -60,33 +60,35 @@
            WRITE OUT-LINE FROM COL-HEADS AFTER ADVANCING 1 LINE.
            WRITE OUT-LINE FROM UNDERLINE-2 AFTER ADVANCING 1 LINE.
        S1.  
-           READ INPUT-FILE INTO IN-CARD AT END GO TO FINISH.
-           IF IN-Z IS GREATER THAN ZERO GO TO B1.
-           MOVE IN-Z TO OT-Z.
-           WRITE OUT-LINE FROM ERROR-MESS AFTER ADVANCING 1 LINE.
-           GO TO S1.
-       B1. 
-           MOVE IN-DIFF TO DIFF.
-           MOVE IN-Z TO Z.
-           DIVIDE 2 INTO Z GIVING X ROUNDED.
-           PERFORM S2 THRU E2 VARYING K FROM 1 BY 1
-               UNTIL K IS GREATER THAN 1000.
-           MOVE IN-Z TO OUTP-Z.
-           WRITE OUT-LINE FROM ABORT-MESS AFTER ADVANCING 1 LINE.
-           GO TO S1.
+           READ INPUT-FILE INTO IN-CARD AT END PERFORM FINISH.
+           IF IN-Z > ZERO 
+               MOVE IN-DIFF TO DIFF
+               MOVE IN-Z TO Z
+               DIVIDE 2 INTO Z GIVING X ROUNDED
+               PERFORM S2 VARYING K FROM 1 BY 1
+                   UNTIL K IS GREATER THAN 1000
+               MOVE IN-Z TO OUTP-Z
+               WRITE OUT-LINE FROM ABORT-MESS AFTER ADVANCING 1 LINE
+               PERFORM S1
+           ELSE
+               MOVE IN-Z TO OT-Z
+               WRITE OUT-LINE FROM ERROR-MESS AFTER ADVANCING 1 LINE
+               PERFORM S1
+           END-IF. 
        S2. 
            COMPUTE Y ROUNDED = 0.5 * (X + Z / X).
            SUBTRACT X FROM Y GIVING TEMP.
            IF TEMP < ZERO 
                COMPUTE TEMP = - TEMP
            END-IF.
-           IF TEMP / (Y + X) IS GREATER THAN DIFF GO TO E2.
-           MOVE IN-Z TO OUT-Z. 
-           MOVE Y TO OUT-Y.
-           WRITE OUT-LINE FROM PRINT-LINE AFTER ADVANCING 1 LINE.
-           GO TO S1.
-       E2. 
-           MOVE Y TO X.
+           IF TEMP / (Y + X) > DIFF
+               MOVE Y TO X
+           ELSE
+               MOVE IN-Z TO OUT-Z
+               MOVE Y TO OUT-Y
+               WRITE OUT-LINE FROM PRINT-LINE AFTER ADVANCING 1 LINE
+               PERFORM S1
+           END-IF.
        FINISH.
            CLOSE INPUT-FILE, STANDARD-OUTPUT. 
        STOP RUN.
