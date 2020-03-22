@@ -58,7 +58,7 @@
        77 DONE pic 9.
        PROCEDURE DIVISION.
            OPEN OUTPUT STANDARD-OUTPUT.
-           PERFORM M1 UNTIL IN-Z < 0.
+           PERFORM M1.
 
        M1.
            WRITE OUT-LINE FROM EXIT-HOW AFTER ADVANCING 1 LINE.
@@ -75,22 +75,23 @@
                if IN-Z = 0 then
                    MOVE IN-Z TO OT-Z
                    WRITE OUT-LINE FROM ERROR-MESS AFTER ADVANCING 1 LINE
+                   PERFORM M1
                ELSE
                    perform S1
                END-IF
            END-IF.
        S1. 
            MOVE 0 to DONE.
-               IF IN-Z > ZERO 
-                   MOVE IN-DIFF TO DIFF
-                   MOVE IN-Z TO Z
-                   DIVIDE 2 INTO Z GIVING X ROUNDED
-                   PERFORM S2 VARYING K FROM 1 BY 1
-                       UNTIL K IS GREATER THAN 1000
-                   MOVE IN-Z TO OUTP-Z
-                   WRITE OUT-LINE FROM ABORT-MESS AFTER ADVANCING 1 LINE
-                   PERFORM S1
-               END-IF.
+            IF IN-Z > ZERO 
+                MOVE IN-DIFF TO DIFF
+                MOVE IN-Z TO Z
+                DIVIDE 2 INTO Z GIVING X ROUNDED
+                PERFORM S2 VARYING K FROM 1 BY 1
+                   UNTIL K IS GREATER THAN 1000
+                MOVE IN-Z TO OUTP-Z
+                WRITE OUT-LINE FROM ABORT-MESS AFTER ADVANCING 1 LINE
+                PERFORM S1
+            END-IF.
 
        S2. 
            COMPUTE Y ROUNDED = 0.5 * (X + Z / X).
