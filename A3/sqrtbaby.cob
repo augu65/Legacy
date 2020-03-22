@@ -3,26 +3,20 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT INPUT-FILE ASSIGN TO "sqrt.dat"
-           ORGANIZATION IS LINE SEQUENTIAL.
            SELECT STANDARD-OUTPUT ASSIGN TO DISPLAY.
        DATA DIVISION.
        FILE SECTION.
-       FD INPUT-FILE.
-           01 STANDARD-INPUT PICTURE X(80).
        FD STANDARD-OUTPUT.
            01 OUT-LINE  PICTURE X(80).
        WORKING-STORAGE SECTION.
+       77 IN-Z  PICTURE s9(11)v9(6).
        77 DIFF PICTURE V9(5).
        77 Z    PICTURE 9(11)V9(6).
        77 K    PICTURE S9999.
        77 X    PICTURE 9(11)V9(6).
        77 Y    PICTURE 9(11)V9(6).
        77 TEMP PICTURE 9(11)V9(6).
-       01 IN-CARD.
-          02 IN-Z     PICTURE S9(10)V9(6) SIGN LEADING SEPARATE.
-          02 IN-DIFF  PICTURE V9(5).
-          02 FILLER   PICTURE X(58).
+       77 IN-DIFF PICTURE V9(5).
        01 TITLE-LINE.
           02 FILLER PICTURE X(9) VALUE SPACES.
           02 FILLER PICTURE X(26) VALUE 'SQUARE ROOT APPROXIMATIONS'.
@@ -52,16 +46,41 @@
           02 OUTP-Z PICTURE Z(11)9.9(6).
           02 FILLER PICTURE X(37) VALUE
              '  ATTEMPT ABORTED,TOO MANY ITERATIONS'.
+       01 QUIT.
+          02 FILLER PICTURE X(38) VALUE
+             ' EXITING THE PROGRAM. HAVE A GOOD DAY!'.
+       01 INPUT-DATA.
+          02 FILLER PICTURE X(39) VALUE
+             ' PLEASE ENTER A NUMBER TO BE CALULATED:'.
+       01 EXIT-HOW.
+          02 FILLER PICTURE X(38) VALUE
+             ' ENTER A NEGATIVE NUMBER TO EXIT.     '.
        77 DONE pic 9.
        PROCEDURE DIVISION.
-           OPEN INPUT INPUT-FILE, OUTPUT STANDARD-OUTPUT.
-           WRITE OUT-LINE FROM TITLE-LINE AFTER ADVANCING 0 LINES.
-           WRITE OUT-LINE FROM UNDER-LINE AFTER ADVANCING 1 LINE.
-           WRITE OUT-LINE FROM COL-HEADS AFTER ADVANCING 1 LINE.
-           WRITE OUT-LINE FROM UNDERLINE-2 AFTER ADVANCING 1 LINE.
+           OPEN OUTPUT STANDARD-OUTPUT.
+           PERFORM M1 UNTIL IN-Z < 0.
+
+       M1.
+           WRITE OUT-LINE FROM EXIT-HOW AFTER ADVANCING 1 LINE.
+           WRITE OUT-LINE FROM INPUT-DATA AFTER ADVANCING 1 LINE. 
+           accept IN-Z.
+           if IN-Z < 0 then 
+               write out-line from QUIT
+               perform finish
+           ELSE
+               WRITE OUT-LINE FROM TITLE-LINE AFTER ADVANCING 0 LINES
+               WRITE OUT-LINE FROM UNDER-LINE AFTER ADVANCING 1 LINE
+               WRITE OUT-LINE FROM COL-HEADS AFTER ADVANCING 1 LINE
+               WRITE OUT-LINE FROM UNDERLINE-2 AFTER ADVANCING 1 LINE
+               if IN-Z = 0 then
+                   MOVE IN-Z TO OT-Z
+                   WRITE OUT-LINE FROM ERROR-MESS AFTER ADVANCING 1 LINE
+               ELSE
+                   perform S1
+               END-IF
+           END-IF.
        S1. 
            MOVE 0 to DONE.
-           READ INPUT-FILE INTO IN-CARD AT END PERFORM FINISH.
                IF IN-Z > ZERO 
                    MOVE IN-DIFF TO DIFF
                    MOVE IN-Z TO Z
@@ -70,10 +89,6 @@
                        UNTIL K IS GREATER THAN 1000
                    MOVE IN-Z TO OUTP-Z
                    WRITE OUT-LINE FROM ABORT-MESS AFTER ADVANCING 1 LINE
-                   PERFORM S1
-               ELSE
-                   MOVE IN-Z TO OT-Z
-                   WRITE OUT-LINE FROM ERROR-MESS AFTER ADVANCING 1 LINE
                    PERFORM S1
                END-IF.
 
@@ -89,8 +104,8 @@
                MOVE IN-Z TO OUT-Z
                MOVE Y TO OUT-Y
                WRITE OUT-LINE FROM PRINT-LINE AFTER ADVANCING 1 LINE
-               PERFORM S1
+               PERFORM M1
            END-IF.
        FINISH.
-           CLOSE INPUT-FILE, STANDARD-OUTPUT. 
+           CLOSE STANDARD-OUTPUT. 
        STOP RUN.
