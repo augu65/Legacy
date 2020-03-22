@@ -55,7 +55,6 @@
        01 EXIT-HOW.
           02 FILLER PICTURE X(38) VALUE
              ' ENTER A NEGATIVE NUMBER TO EXIT.     '.
-       77 DONE pic 9.
        PROCEDURE DIVISION.
            OPEN OUTPUT STANDARD-OUTPUT.
            PERFORM M1.
@@ -81,7 +80,6 @@
                END-IF
            END-IF.
        S1. 
-           MOVE 0 to DONE.
             IF IN-Z > ZERO 
                 MOVE IN-DIFF TO DIFF
                 MOVE IN-Z TO Z
