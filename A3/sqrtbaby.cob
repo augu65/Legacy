@@ -2,7 +2,7 @@
        *> Course: CIS*3190
        *> A3
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. SQRTBAB.
+       PROGRAM-ID. SQRTBABY.
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
@@ -20,6 +20,8 @@
        77 X    PICTURE 9(11)V9(6).
        77 Y    PICTURE 9(11)V9(6).
        77 TEMP PICTURE 9(11)V9(6).
+
+       *> display
        01 TITLE-LINE.
           02 FILLER PICTURE X(9) VALUE SPACES.
           02 FILLER PICTURE X(26) VALUE 'SQUARE ROOT APPROXIMATIONS'.
@@ -43,7 +45,8 @@
        01 ERROR-MESS.
           02 FILLER PICTURE X VALUE SPACE.
           02 OT-Z   PICTURE -(11)9.9(6).
-          02 FILLER PICTURE X(21) VALUE '        INVALID INPUT'.
+          02 FILLER PICTURE X(21) VALUE 
+             '        INVALID INPUT'.
        01 ABORT-MESS.
           02 FILLER PICTURE X VALUE SPACE.
           02 OUTP-Z PICTURE Z(11)9.9(6).
