@@ -2,7 +2,7 @@
        *> course: cis*3190
        *> a3
        identification division.
-       program-id. sqrt_one.
+       program-id. sqrtbabyex.
        environment division.
        input-output section.
        file-control.
@@ -95,7 +95,7 @@
        sqrt_prep. 
            *> moves input to z to be maninpulated
            move in-z to z.
-           call 'sqrt_two' using z, y.
+           call 'sqrtbabyex_calc' using z, y.
            *> assigns values to out variables
            move in-z to out-z
            move y to out-y
