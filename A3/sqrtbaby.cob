@@ -81,8 +81,8 @@
            *> checks if entry is = to an exit value
            if IN-Z < 0 THEN 
                *> displays exit message
-               WRITE out-line FROM QUIT
-               PERFORM finish
+               WRITE OUT-LINE FROM QUIT
+               PERFORM FINISH
            ELSE
                *>displays square root value
                WRITE OUT-LINE FROM TITLE-LINE AFTER ADVANCING 0 LINES
