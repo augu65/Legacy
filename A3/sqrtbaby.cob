@@ -77,12 +77,12 @@
            WRITE OUT-LINE FROM EXIT-HOW AFTER ADVANCING 1 LINE.
            WRITE OUT-LINE FROM INPUT-DATA AFTER ADVANCING 1 LINE. 
            *> gets input
-           accept IN-Z.
+           ACCEPT IN-Z.
            *> checks if entry is = to an exit value
-           if IN-Z < 0 then 
+           if IN-Z < 0 THEN 
                *> displays exit message
-               write out-line from QUIT
-               perform finish
+               WRITE out-line FROM QUIT
+               PERFORM finish
            ELSE
                *>displays square root value
                WRITE OUT-LINE FROM TITLE-LINE AFTER ADVANCING 0 LINES
@@ -90,7 +90,7 @@
                WRITE OUT-LINE FROM COL-HEADS AFTER ADVANCING 1 LINE
                WRITE OUT-LINE FROM UNDERLINE-2 AFTER ADVANCING 1 LINE
                *> checks if value is 0
-               if IN-Z = 0 then
+               if IN-Z = 0 THEN
                    MOVE IN-Z TO OT-Z
                    *> displays error message
                    WRITE OUT-LINE FROM ERROR-MESS AFTER ADVANCING 1 LINE
@@ -114,10 +114,10 @@
            *> computes square root
            COMPUTE Y ROUNDED = 0.5 * (X + Z / X).
            COMPUTE TEMP = Y - X.
-           IF NOT TEMP > 0 
+           IF NOT TEMP > 0 THEN
                COMPUTE TEMP = - TEMP
            END-IF.
-           IF TEMP / (Y + X) > 0
+           IF TEMP / (Y + X) > 0 THEN
                MOVE Y TO X
            ELSE
                *> assigns values to out variables
