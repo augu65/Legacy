@@ -2,7 +2,7 @@
        *> course: cis*3190
        *> a3
        identification division.
-       program-id. sqrtbaby.
+       program-id. sqrt_one.
        environment division.
        input-output section.
        file-control.
@@ -71,7 +71,6 @@
            write out-line from welcome after advancing 1 line.
            *> calls 
            perform main.
-
        main.
            *> displays prompt and exit message
            write out-line from exit-how after advancing 1 line.
@@ -82,8 +81,7 @@
            if in-z < 0 then 
                *> displays exit message
                write out-line from quit
-               close standard-output
-               stop run
+               perform finish
            else
                *>displays square root value
                write out-line from title-line after advancing 0 lines
@@ -97,11 +95,11 @@
                    write out-line from error-mess after advancing 1 line
                    perform main
                else
-                   perform prep_sqrt
+                   perform sqrt_prep
                end-if
            end-if.
 
-       prep_sqrt. 
+       sqrt_prep. 
            *> moves input to z to be maninpulated
            move in-z to z.
            compute x rounded = z / 2.
@@ -128,3 +126,8 @@
                *> returns to get more input
                perform main
            end-if.
+
+       *> used to close the standard output
+       finish.
+           close standard-output. 
+       stop run.
