@@ -108,7 +108,7 @@
              UNTIL K IS GREATER THAN 1000.
            MOVE IN-Z TO OUTP-Z.
            WRITE OUT-LINE FROM ABORT-MESS AFTER ADVANCING 1 LINE.
-           PERFORM S1.
+           PERFORM M1.
 
        S2. 
            *> computes square root
