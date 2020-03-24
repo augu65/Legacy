@@ -1,3 +1,6 @@
+       *> By: Jonah Stegman
+       *> Course: CIS*3190
+       *> A3
        IDENTIFICATION DIVISION.
        PROGRAM-ID. SQRTBAB.
        ENVIRONMENT DIVISION.
@@ -9,14 +12,14 @@
        FD STANDARD-OUTPUT.
            01 OUT-LINE  PICTURE X(80).
        WORKING-STORAGE SECTION.
+       *> input value
        77 IN-Z  PICTURE s9(11)v9(6).
-       77 DIFF PICTURE V9(5).
+       *> values used to calulate square root
        77 Z    PICTURE 9(11)V9(6).
        77 K    PICTURE S9999.
        77 X    PICTURE 9(11)V9(6).
        77 Y    PICTURE 9(11)V9(6).
        77 TEMP PICTURE 9(11)V9(6).
-       77 IN-DIFF PICTURE V9(5).
        01 TITLE-LINE.
           02 FILLER PICTURE X(9) VALUE SPACES.
           02 FILLER PICTURE X(26) VALUE 'SQUARE ROOT APPROXIMATIONS'.
@@ -55,56 +58,74 @@
        01 EXIT-HOW.
           02 FILLER PICTURE X(38) VALUE
              ' ENTER A NEGATIVE NUMBER TO EXIT.     '.
+       01 WELCOME.
+          02 FILLER PICTURE X(44) VALUE
+             ' WELCOME TO THE COBOL SQUARE ROOT CALCULATOR'.
+
        PROCEDURE DIVISION.
            OPEN OUTPUT STANDARD-OUTPUT.
+           *> Displays welcome message
+           WRITE OUT-LINE FROM WELCOME AFTER ADVANCING 1 LINE.
+           *> Calls 
            PERFORM M1.
 
        M1.
+           *> Displays prompt and exit message
            WRITE OUT-LINE FROM EXIT-HOW AFTER ADVANCING 1 LINE.
            WRITE OUT-LINE FROM INPUT-DATA AFTER ADVANCING 1 LINE. 
+           *> gets input
            accept IN-Z.
+           *> checks if entry is = to an exit value
            if IN-Z < 0 then 
+               *> displays exit message
                write out-line from QUIT
                perform finish
            ELSE
+               *>displays square root value
                WRITE OUT-LINE FROM TITLE-LINE AFTER ADVANCING 0 LINES
                WRITE OUT-LINE FROM UNDER-LINE AFTER ADVANCING 1 LINE
                WRITE OUT-LINE FROM COL-HEADS AFTER ADVANCING 1 LINE
                WRITE OUT-LINE FROM UNDERLINE-2 AFTER ADVANCING 1 LINE
+               *> checks if value is 0
                if IN-Z = 0 then
                    MOVE IN-Z TO OT-Z
+                   *> displays error message
                    WRITE OUT-LINE FROM ERROR-MESS AFTER ADVANCING 1 LINE
                    PERFORM M1
                ELSE
                    perform S1
                END-IF
            END-IF.
+
        S1. 
-            IF IN-Z > ZERO 
-                MOVE IN-DIFF TO DIFF
-                MOVE IN-Z TO Z
-                DIVIDE 2 INTO Z GIVING X ROUNDED
-                PERFORM S2 VARYING K FROM 1 BY 1
-                   UNTIL K IS GREATER THAN 1000
-                MOVE IN-Z TO OUTP-Z
-                WRITE OUT-LINE FROM ABORT-MESS AFTER ADVANCING 1 LINE
-                PERFORM S1
-            END-IF.
+           *> moves input to Z to be maninpulated
+           MOVE IN-Z TO Z.
+           COMPUTE X ROUNDED = Z / 2.
+           PERFORM S2 VARYING K FROM 1 BY 1
+             UNTIL K IS GREATER THAN 1000.
+           MOVE IN-Z TO OUTP-Z.
+           WRITE OUT-LINE FROM ABORT-MESS AFTER ADVANCING 1 LINE.
+           PERFORM S1.
 
        S2. 
+           *> computes square root
            COMPUTE Y ROUNDED = 0.5 * (X + Z / X).
-           SUBTRACT X FROM Y GIVING TEMP.
-           IF NOT TEMP > ZERO 
+           COMPUTE TEMP = Y - X.
+           IF NOT TEMP > 0 
                COMPUTE TEMP = - TEMP
            END-IF.
-           IF TEMP / (Y + X) > DIFF
+           IF TEMP / (Y + X) > 0
                MOVE Y TO X
            ELSE
+               *> assigns values to out variables
                MOVE IN-Z TO OUT-Z
                MOVE Y TO OUT-Y
                WRITE OUT-LINE FROM PRINT-LINE AFTER ADVANCING 1 LINE
+               *> returns to get more input
                PERFORM M1
            END-IF.
+
+       *> used to close the standard output
        FINISH.
            CLOSE STANDARD-OUTPUT. 
        STOP RUN.
