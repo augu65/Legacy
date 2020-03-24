@@ -16,10 +16,7 @@
        77 in-z  picture s9(11)v9(6).
        *> values used to calulate square root
        77 z    picture 9(11)v9(6).
-       77 k    picture s9999.
-       77 x    picture 9(11)v9(6).
        77 y    picture 9(11)v9(6).
-       77 temp picture 9(11)v9(6).
 
        *> display
        01 title-line.
@@ -47,11 +44,6 @@
           02 ot-z   picture -(11)9.9(6).
           02 filler picture x(21) value 
              '        invalid input'.
-       01 abort-mess.
-          02 filler picture x value space.
-          02 outp-z picture z(11)9.9(6).
-          02 filler picture x(37) value
-             '  attempt aborted,too many iterations'.
        01 quit.
           02 filler picture x(38) value
              ' exiting the program. have a good day!'.
@@ -69,8 +61,7 @@
            open output standard-output.
            *> displays welcome message
            write out-line from welcome after advancing 1 line.
-           *> calls 
-           perform main.
+           
        main.
            *> displays prompt and exit message
            write out-line from exit-how after advancing 1 line.
@@ -81,7 +72,9 @@
            if in-z < 0 then 
                *> displays exit message
                write out-line from quit
-               perform finish
+               *> used to close the standard output
+               close standard-output
+               stop run
            else
                *>displays square root value
                write out-line from title-line after advancing 0 lines
@@ -102,32 +95,9 @@
        sqrt_prep. 
            *> moves input to z to be maninpulated
            move in-z to z.
-           compute x rounded = z / 2.
-           perform calc_sqrt varying k from 1 by 1
-             until k is greater than 1000.
-           move in-z to outp-z.
-           write out-line from abort-mess after advancing 1 line.
+           call 'sqrt_two' using z, y.
+           *> assigns values to out variables
+           move in-z to out-z
+           move y to out-y
+           write out-line from print-line after advancing 1 line
            perform main.
-
-       calc_sqrt. 
-           *> computes square root
-           compute y rounded = 0.5 * (x + z / x).
-           compute temp = y - x.
-           if not temp > 0 then
-               compute temp = - temp
-           end-if.
-           if temp / (y + x) > 0 then
-               move y to x
-           else
-               *> assigns values to out variables
-               move in-z to out-z
-               move y to out-y
-               write out-line from print-line after advancing 1 line
-               *> returns to get more input
-               perform main
-           end-if.
-
-       *> used to close the standard output
-       finish.
-           close standard-output. 
-       stop run.

@@ -69,8 +69,6 @@
            open output standard-output.
            *> displays welcome message
            write out-line from welcome after advancing 1 line.
-           *> calls 
-           perform main.
 
        main.
            *> displays prompt and exit message
@@ -82,6 +80,7 @@
            if in-z < 0 then 
                *> displays exit message
                write out-line from quit
+               *> used to close the standard output
                close standard-output
                stop run
            else
