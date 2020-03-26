@@ -14,9 +14,9 @@
 
        procedure division using z, y.
        compute x rounded = z / 2.
-       perform calc_sqrt varying k from 1 by 1
+       perform squareroot varying k from 1 by 1
              until k is greater than 1000.
-       calc_sqrt. 
+       squareroot. 
            *> computes square root
            compute y rounded = 0.5 * (x + z / x).
            compute temp = y - x.

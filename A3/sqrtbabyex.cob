@@ -51,8 +51,8 @@
           02 filler picture x(39) value
              ' please enter a number to be calulated:'.
        01 exit-how.
-          02 filler picture x(38) value
-             ' enter a negative number to exit.     '.
+          02 filler picture x(19) value
+             ' enter zero to exit.     '.
        01 welcome.
           02 filler picture x(44) value
              ' welcome to the cobol square root calculator'.
@@ -69,7 +69,7 @@
            *> gets input
            accept in-z.
            *> checks if entry is = to an exit value
-           if in-z < 0 then 
+           if in-z = 0 then 
                *> displays exit message
                write out-line from quit
                *> used to close the standard output
@@ -82,7 +82,7 @@
                write out-line from col-heads after advancing 1 line
                write out-line from underline-2 after advancing 1 line
                *> checks if value is 0
-               if in-z = 0 then
+               if in-z < 0 then
                    move in-z to ot-z
                    *> displays error message
                    write out-line from error-mess after advancing 1 line
