@@ -4,7 +4,7 @@ CIS 3190
 Jonah Stegman
 '''
 import math
-
+import time
 
 def gcd(x, y):
     '''
@@ -52,12 +52,15 @@ def main():
     '''
     The Main function
     '''
-    val = gcd(34964,13434)
-    print(val)
-    val = euclids(3496, 13)
-    print(val)
-    val = stein_gcd(3496, 13)
-    print(val)
+    start = time.time()
+    gcd(34964, 13434)
+    print(f"Execution Time : {time.time() - start} seconds")
+    start2 = time.time()
+    euclids(3496, 13)
+    print(f"Execution Time : {time.time() - start2} seconds")
+    start3 = time.time()
+    stein_gcd(3496, 13)
+    print(f"Execution Time : {time.time() - start3} seconds")
 
 if __name__ == "__main__":
     main()

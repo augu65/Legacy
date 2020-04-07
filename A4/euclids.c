@@ -10,20 +10,30 @@ int gcd(long x, long y);
 int euclid(long a, long b);
 int stein_gcd(long x, long y);
 int main(){
-    long val = 0.0;
-    val = gcd (3496,13);
-    printf("%ld\n", val);
-    val = euclid (3496,13);
-    printf("%ld\n", val);
-    val = stein_gcd (3496,13);
-    printf("%ld\n", val);
+    clock_t start, end;
+    double cpu_time;
+    start = clock();
+    gcd (3496,13);
+    end = clock();
+    cpu_time = ((double)(end - start) / CLOCKS_PER_SEC);
+    printf("Execution time: %f seconds\n", cpu_time);
+    start = clock();
+    euclid (3496,13);
+    end = clock();
+    cpu_time = ((double)(end - start) / CLOCKS_PER_SEC);
+    printf("Execution time: %f seconds\n", cpu_time);
+    start = clock();
+    stein_gcd (3496,13);
+    end = clock();
+    cpu_time = ((double)(end - start) / CLOCKS_PER_SEC);
+    printf("Execution time: %f seconds\n", cpu_time);
     return 0;
 }
 
 int gcd(long x, long y){ 
     long r;
     if (y == 0){
-        return x
+        return x;
     }
     r = x % y;
     while (r != 0){
