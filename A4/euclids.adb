@@ -63,11 +63,16 @@ procedure euclids is
 begin
     start := clock;
     val := gcd(3496,13);
-    put_line( Unsigned_64'image(val));
+    end_time := clock;
+    exec := end_time - start;
+    put_line("Time to Execute: " & Duration'Image (To_Duration(exec)) & " seconds");
+    start := clock;
     val := recursive_gcd(3496,13);
-    put_line( Unsigned_64'image(val));
+    end_time := clock;
+    exec := end_time - start;
+    put_line("Time to Execute: " & Duration'Image (To_Duration(exec)) & " seconds");
+    start := clock;
     val := stein_gcd(3496,13);
-    put_line( Unsigned_64'image(val));
     end_time := clock;
     exec := end_time - start;
     put_line("Time to Execute: " & Duration'Image (To_Duration(exec)) & " seconds");
