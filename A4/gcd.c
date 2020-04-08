@@ -23,7 +23,7 @@ int main(){
         arr[ctr] = atol(num);
         ctr ++;
     }
-    fclose(fp)
+    fclose(fp);
     clock_t start, end;
     float cpu_time;
     start = clock();
