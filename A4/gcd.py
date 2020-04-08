@@ -1,3 +1,4 @@
+#!Python3
 '''
 Assignment 4
 CIS 3190
@@ -52,15 +53,37 @@ def main():
     '''
     The Main function
     '''
+    arr = []
+    ctr = 1
+    fname = input("Please Enter the filename: ")
+    with open(fname,'r') as file:
+        arr = file.readlines()
     start = time.time()
-    eucluidNR_GCD(34964, 13434)
-    print(f"Execution Time : {time.time() - start} seconds")
+    for x in arr:
+        y = arr[ctr]
+        eucluidNR_GCD(int(x.strip()),int( y.strip()))
+        ctr += 1
+        if ctr >= len(arr):
+            break
+    print(f"Execution time of EuclidNR_GCD: {time.time() - start} seconds")
+    ctr = 1
     start2 = time.time()
-    euclidR_GCD(3496, 13)
-    print(f"Execution Time : {time.time() - start2} seconds")
+    for x in arr:
+        y = arr[ctr]
+        euclidR_GCD(int(x.strip()),int( y.strip()))
+        ctr += 1 
+        if ctr >= len(arr):
+            break
+    print(f"Execution time of EuclidR_GCD: {time.time() - start2} seconds")
+    ctr = 1
     start3 = time.time()
-    stein_GCD(3496, 13)
-    print(f"Execution Time : {time.time() - start3} seconds")
+    for x in arr:
+        y = arr[ctr]
+        stein_GCD(int(x.strip()), int(y.strip()))
+        ctr += 1
+        if ctr >= len(arr):
+            break
+    print(f"Execution time of Stein_GCD: {time.time() - start3} seconds")
 
 if __name__ == "__main__":
     main()

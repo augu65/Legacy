@@ -6,31 +6,50 @@ Jonah Stegman
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-int gcd(long x, long y);
-int euclid(long a, long b);
-int stein_GCD(long x, long y);
+long eucluidNR_GCD(long x, long y);
+long euclidR_GCD(long a, long b);
+long stein_GCD(long x, long y);
 int main(){
+    long * arr = (long *)malloc(sizeof(long)*1);
+    FILE *fp;
+    char num[100];
+    int ctr = 0;
+    char fname[100] = "";
+    printf("Enter the filename: ");
+    scanf("%s",fname);
+    fp = fopen(fname, "r");
+    while (fgets(num, sizeof(long), fp) != NULL){
+        arr = (long *)realloc(arr, sizeof(long)*ctr+1);
+        arr[ctr] = atol(num);
+        ctr ++;
+    }
     clock_t start, end;
-    double cpu_time;
+    float cpu_time;
     start = clock();
-    eucluidNR_GCD(3496, 13);
+    for (int i=0; i < ctr-1; i++){
+        eucluidNR_GCD(arr[i], arr[i+1]);
+    }
     end = clock();
     cpu_time = ((double)(end - start) / CLOCKS_PER_SEC);
-    printf("Execution time: %f seconds\n", cpu_time);
+    printf("Execution time of euclidNR_GCD: %f seconds\n", cpu_time);
     start = clock();
-    euclidR_GCD(3496, 13);
+    for (int i=0; i < ctr-1; i++){
+        euclidR_GCD(arr[i], arr[i+1]);
+    }
     end = clock();
     cpu_time = ((double)(end - start) / CLOCKS_PER_SEC);
-    printf("Execution time: %f seconds\n", cpu_time);
+    printf("Execution time of EuclidR_GCD: %f seconds\n", cpu_time);
     start = clock();
-    stein_GCD (3496,13);
+    for (int i=0; i < ctr-1; i++){
+        stein_GCD(arr[i], arr[i+1]);
+    }
     end = clock();
     cpu_time = ((double)(end - start) / CLOCKS_PER_SEC);
-    printf("Execution time: %f seconds\n", cpu_time);
+    printf("Execution time of Stein_GCD: %f seconds\n", cpu_time);
     return 0;
-}
+    }
 
-int eucluidNR_GCD(long x, long y)
+long eucluidNR_GCD(long x, long y)
 {
     long r;
     if (y == 0){
@@ -45,14 +64,15 @@ int eucluidNR_GCD(long x, long y)
     return y;
 }
 
-int euclidR_GCD(long a, long b){
+long euclidR_GCD(long a, long b){
     if (b == 0)
         return a;
     else
         return euclidR_GCD(b, (a % b));
 }
 
-int stein_GCD(long x, long y){ 
+long stein_GCD(long x, long y)
+{
     if (x == y)
         return x;
     if (x == 0)

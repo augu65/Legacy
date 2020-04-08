@@ -4,7 +4,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Real_Time; use Ada.Real_Time;
 with Interfaces; use Interfaces;
-procedure euclids is 
+procedure gcd is 
     function eucluidNR_GCD(q: Unsigned_64; w: Unsigned_64) return Unsigned_64 is
     r: Unsigned_64;
     x: Unsigned_64 := q;
@@ -57,23 +57,63 @@ procedure euclids is
         return stein_GCD(Shift_Right(z, 1), x);
     end stein_GCD;
 
+    -- variables in main
     start, end_time : Time;
     exec : Time_Span;
-    val : Unsigned_64 := 0;
+    numsize : constant integer := 3000;
+    arr : array(0..3000) of Unsigned_64;
+    fp : file_type;
+    i : integer := 1;
+    x : Unsigned_64 := 0;
+    y : Unsigned_64 := 0;
 begin
+open (file => fp,
+    mode => in_file,
+    name => "test.txt"); 
+    -- makes array
+        -- Read in from file
+        While not End_Of_File (fp) Loop
+            put_line(unsigned_64'Image(arr(i)));
+            arr(i) := Unsigned_64'Value(Get_Line (fp));
+            put_line(unsigned_64'Image(arr(i)));
+            i := i + 1;
+            exit when i > numsize;
+        end loop;
+    --start doing gcd stuff
+    i := 1;
     start := clock;
-    val := eucluidNR_GCD(3496,13);
+    loop
+        exit when i > numsize;
+        x := arr(i);
+        i := i + 1;
+        y := arr(i);
+        y := eucluidNR_GCD(x,y);
+    end loop;
     end_time := clock;
     exec := end_time - start;
-    put_line("Time to Execute: " & Duration'Image (To_Duration(exec)) & " seconds");
+    put_line("Execute time of eucluidNR_GCD: " & Duration'Image (To_Duration(exec)) & " seconds");
+    i := 1;
     start := clock;
-    val := euclidR_GCD(3496,13);
+    loop
+        exit when i > numsize;
+        x := arr(i);
+        i := i + 1;
+        y := arr(i);
+        y := euclidR_GCD(x,y);
+    end loop;
     end_time := clock;
     exec := end_time - start;
-    put_line("Time to Execute: " & Duration'Image (To_Duration(exec)) & " seconds");
+    put_line("Execute time of euclidR_GCD: " & Duration'Image (To_Duration(exec)) & " seconds");
+    i := 1;
     start := clock;
-    val := stein_GCD(3496,13);
+    loop
+        exit when i > numsize;
+        x := arr(i);
+        i := i + 1;
+        y := arr(i);
+        y := stein_GCD(x,y);
+    end loop;
     end_time := clock;
     exec := end_time - start;
-    put_line("Time to Execute: " & Duration'Image (To_Duration(exec)) & " seconds");
-end euclids;
+    put_line("Execute time of Stein_GCD: " & Duration'Image (To_Duration(exec)) & " seconds");
+end gcd;
