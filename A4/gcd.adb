@@ -5,6 +5,7 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Real_Time; use Ada.Real_Time;
 with Interfaces; use Interfaces;
 procedure gcd is 
+    type arr is array(1..3000) of Unsigned_64;
     function eucluidNR_GCD(q: Unsigned_64; w: Unsigned_64) return Unsigned_64 is
     r: Unsigned_64;
     x: Unsigned_64 := q;
@@ -57,36 +58,49 @@ procedure gcd is
         return stein_GCD(Shift_Right(z, 1), x);
     end stein_GCD;
 
+
+    function read return arr is
+        fname : string(1..25);
+        length : natural;
+        fp : file_type;
+        arrnew : arr;
+    begin
+        -- gets file
+        put_line("Enter the filename: ");
+        get_line(fname,length);
+        open (fp, in_file, fname(1..length)); 
+        -- Read in from file
+        for i in 1..3000 Loop
+            declare
+                number : constant string := get_line(fp);
+                temp : Unsigned_64;
+            begin
+                temp := Unsigned_64'Value(number);
+                arrnew(i) := temp;
+            end;
+        end loop;
+        close(fp);
+        return arrnew;
+    end read;
+    
     -- variables in main
     start, end_time : Time;
     exec : Time_Span;
-    numsize : constant integer := 3000;
-    arr : array(0..3000) of Unsigned_64;
-    fp : file_type;
+    numsize :  constant integer := 3000;
+    arrnew : arr;
     i : integer := 1;
     x : Unsigned_64 := 0;
     y : Unsigned_64 := 0;
 begin
-open (file => fp,
-    mode => in_file,
-    name => "test.txt"); 
-    -- makes array
-        -- Read in from file
-        While not End_Of_File (fp) Loop
-            put_line(unsigned_64'Image(arr(i)));
-            arr(i) := Unsigned_64'Value(Get_Line (fp));
-            put_line(unsigned_64'Image(arr(i)));
-            i := i + 1;
-            exit when i > numsize;
-        end loop;
+    arrnew := read;
     --start doing gcd stuff
     i := 1;
     start := clock;
     loop
-        exit when i > numsize;
-        x := arr(i);
+        exit when i > numsize-1;
+        x := arrnew(i);
         i := i + 1;
-        y := arr(i);
+        y := arrnew(i);
         y := eucluidNR_GCD(x,y);
     end loop;
     end_time := clock;
@@ -95,10 +109,10 @@ open (file => fp,
     i := 1;
     start := clock;
     loop
-        exit when i > numsize;
-        x := arr(i);
+        exit when i > numsize-1;
+        x := arrnew(i);
         i := i + 1;
-        y := arr(i);
+        y := arrnew(i);
         y := euclidR_GCD(x,y);
     end loop;
     end_time := clock;
@@ -107,10 +121,10 @@ open (file => fp,
     i := 1;
     start := clock;
     loop
-        exit when i > numsize;
-        x := arr(i);
+        exit when i > numsize-1;
+        x := arrnew(i);
         i := i + 1;
-        y := arr(i);
+        y := arrnew(i);
         y := stein_GCD(x,y);
     end loop;
     end_time := clock;
