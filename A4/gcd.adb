@@ -61,9 +61,9 @@ procedure gcd is
 
     function read return arr is
         fname : string(1..25);
-        length : natural;
         fp : file_type;
         arrnew : arr;
+        length : natural;
     begin
         -- gets file
         put_line("Enter the filename: ");
