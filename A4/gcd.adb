@@ -6,14 +6,17 @@ with Ada.Real_Time; use Ada.Real_Time;
 with Interfaces; use Interfaces;
 procedure gcd is 
     type arr is array(1..3000) of Unsigned_64;
+    -- The non recursive version of euclid's gcd
     function eucluidNR_GCD(q: Unsigned_64; w: Unsigned_64) return Unsigned_64 is
     r: Unsigned_64;
     x: Unsigned_64 := q;
     y: Unsigned_64 := w;
     begin
+        --checks to ensure y is valid
         if y = 0 then
             return x;
         end if;
+        --calculates gcd
         r:= x mod y;
         while r /= 0 loop
             x := y;
@@ -23,23 +26,29 @@ procedure gcd is
         return y;
     end eucluidNR_GCD;
     
+    -- The recursive version of euclid's gcd
     function euclidR_GCD(x: Unsigned_64; y: Unsigned_64) return Unsigned_64 is
     begin
+        --checks to ensure y is valid
         if y = 0 then
             return x;
         else
+            -- recursively calls to get the gcd
             return euclidR_GCD(y, x mod y);
         end if;
     end euclidR_GCD; 
 
+    -- the stein gcd function
     function stein_GCD(x: Unsigned_64; y: Unsigned_64) return Unsigned_64 is
     z: Unsigned_64;
     begin
+        -- checks if the result will be x or y
         if x = y or y = 0 then
             return x;
         elsif x = 0 then
             return y;
         end if;
+        -- calculates gcd
         if x mod 2 = 0 then
             if y mod 2 /= 0 then
                 return stein_GCD(Shift_Right(x, 1), y);   
@@ -58,7 +67,7 @@ procedure gcd is
         return stein_GCD(Shift_Right(z, 1), x);
     end stein_GCD;
 
-
+    -- This function gets the user inputed file
     function read return arr is
         fname : string(1..25);
         fp : file_type;
@@ -92,10 +101,16 @@ procedure gcd is
     x : Unsigned_64 := 0;
     y : Unsigned_64 := 0;
 begin
+    put_line("welcome to the GCD calclator");
+    put_line("This will calculate the gcd of 3000 numbers in a file in 3 different ways");
+    put_line("All numbers must be on their own line");
+    put_line("calcuates using recursive, non-recursive euclid, and stein");
     arrnew := read;
     --start doing gcd stuff
+    --reset counter and start clock
     i := 1;
     start := clock;
+    -- loops through the array running the non recurisve euclids gcd function
     loop
         exit when i > numsize-1;
         x := arrnew(i);
@@ -106,8 +121,10 @@ begin
     end_time := clock;
     exec := end_time - start;
     put_line("Execute time of eucluidNR_GCD: " & Duration'Image (To_Duration(exec)) & " seconds");
+    -- reset counter and start clock
     i := 1;
     start := clock;
+    -- loops through the array running the recurisve euclids gcd function
     loop
         exit when i > numsize-1;
         x := arrnew(i);
@@ -118,8 +135,10 @@ begin
     end_time := clock;
     exec := end_time - start;
     put_line("Execute time of euclidR_GCD: " & Duration'Image (To_Duration(exec)) & " seconds");
+    --reset counter and start clock
     i := 1;
     start := clock;
+    -- loops through the array running the stein gcd function
     loop
         exit when i > numsize-1;
         x := arrnew(i);

@@ -10,22 +10,31 @@ long eucluidNR_GCD(long x, long y);
 long euclidR_GCD(long a, long b);
 long stein_GCD(long x, long y);
 int main(){
+    //variables
     long * arr = (long *)malloc(sizeof(long)*1);
     FILE *fp;
     char num[100];
     int ctr = 0;
+    clock_t start, end;
+    float cpu_time;
     char fname[100] = "";
+    // gets the filename from the user
+    printf("welcome to the GCD calclator\n");
+    printf("This will calculate the gcd of a 3000 line file in 3 different ways\n");
+    printf("All numbers must be on their own line\n");
+    printf("calcuates using recursive, non-recursive euclid, and stein\n");
     printf("Enter the filename: ");
     scanf("%s",fname);
     fp = fopen(fname, "r");
+    // reads in the file
     while (fgets(num, sizeof(long), fp) != NULL){
         arr = (long *)realloc(arr, sizeof(long)*ctr+1);
         arr[ctr] = atol(num);
         ctr ++;
     }
     fclose(fp);
-    clock_t start, end;
-    float cpu_time;
+
+    //start clock and loop through array for non recusrive euclids gcd
     start = clock();
     for (int i=0; i < ctr-1; i++){
         eucluidNR_GCD(arr[i], arr[i+1]);
@@ -33,6 +42,8 @@ int main(){
     end = clock();
     cpu_time = ((double)(end - start) / CLOCKS_PER_SEC);
     printf("Execution time of euclidNR_GCD: %f seconds\n", cpu_time);
+
+    //start clock and loop through array for recusrive euclids gcd
     start = clock();
     for (int i=0; i < ctr-1; i++){
         euclidR_GCD(arr[i], arr[i+1]);
@@ -40,6 +51,8 @@ int main(){
     end = clock();
     cpu_time = ((double)(end - start) / CLOCKS_PER_SEC);
     printf("Execution time of EuclidR_GCD: %f seconds\n", cpu_time);
+
+    //start clock and loop through array for steins euclids gcd
     start = clock();
     for (int i=0; i < ctr-1; i++){
         stein_GCD(arr[i], arr[i+1]);
@@ -50,12 +63,15 @@ int main(){
     return 0;
     }
 
+// the non recursive version of euclid gcd
 long eucluidNR_GCD(long x, long y)
 {
     long r;
+    // checks if y is valid
     if (y == 0){
         return x;
     }
+    // calculates gcd
     r = x % y;
     while (r != 0){
         x = y;
@@ -65,13 +81,16 @@ long eucluidNR_GCD(long x, long y)
     return y;
 }
 
+//the recursive version of euclids gcd
 long euclidR_GCD(long a, long b){
     if (b == 0)
         return a;
     else
+        // recusivly calls to calculate gcd
         return euclidR_GCD(b, (a % b));
 }
 
+//the stein version of gcd
 long stein_GCD(long x, long y)
 {
     if (x == y)
