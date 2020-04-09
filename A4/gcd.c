@@ -21,7 +21,7 @@ int main(){
     // gets the filename from the user
     printf("welcome to the GCD calclator\n");
     printf("This will calculate the gcd of a 3000 line file in 3 different ways\n");
-    printf("All numbers must be on their own line\n");
+    printf("All numbers must be on their own lines\n");
     printf("calcuates using recursive, non-recursive euclid, and stein\n");
     printf("Enter the filename: ");
     scanf("%s",fname);
